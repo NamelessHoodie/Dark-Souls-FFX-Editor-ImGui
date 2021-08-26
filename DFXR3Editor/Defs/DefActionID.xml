@@ -6,11 +6,11 @@
 		<entry symbol="[E]" def="Effect Argument"/>
 		<entry symbol="[P]" def="Particle Argument"/>
 		<entry symbol="[PG]" def="Particle On Generation Argument"/>
-		<entry symbol="[T]" def="Trail Argument"/>
-		<entry symbol="[TG]" def="Trail On Generation Argument"/>
+		<entry symbol="[T]" def="Trace Argument"/>
+		<entry symbol="[TG]" def="Trace On Generation Argument"/>
 	</symbolsDef>
 	<Enums>
-		<blendModes>
+		<BlendModes>
 			<entry value="0" name="Unknown"/>
 			<entry value="1" name="Unknown"/>
 			<entry value="2" name="Normal(SourceOver)"/>
@@ -19,7 +19,7 @@
 			<entry value="5" name="Subtract"/>
 			<entry value="6" name="Unknown"/>
 			<entry value="7" name="Screen"/>
-		</blendModes>
+		</BlendModes>
 		<orientationModesGeneral>
 			<entry value="0" name="Unknown"/>
 			<entry value="1" name="Always facing the camera"/>
@@ -48,58 +48,190 @@
 		</orientationSpecializedModes606>
 	</Enums>
 	<ActionIDs>
-		<ActionID ID="75" name="PlaySoundByID()">
+		<ActionID ID="34" name="Position and Rotation (Ignore the Pummy Point)">
+			<Properties1>
+				<field type="[S]" arg="" name="X Rotation Speed"/>
+				<field type="[S]" arg="" name="X Rotation Speed Multiplier"/>
+				<field type="[S]" arg="" name="Y Rotation Speed"/>
+				<field type="[S]" arg="" name="Y Rotation Speed Multiplier"/>
+				<field type="[S]" arg="" name="Z Rotation Speed"/>
+				<field type="[S]" arg="" name="Z Rotation Speed Multiplier"/>
+=			</Properties1>
 			<Fields1>
-				<Field name="Sound ID" dataType="s32" />
-				<Field name="Volume" dataType="f32" />
+				<Field name="" dataType="s32" isBool=""/>
+			</Fields1>
+		</ActionID>
+		<ActionID ID="35" name="Position and Rotation (Ignore the Pummy Point)">
+			<Fields1>
+				<Field name="X Position" dataType="f32"/>
+				<Field name="Y Position" dataType="f32"/>
+				<Field name="Z Position" dataType="f32"/>
+				<Field name="X Rotation" dataType="f32"/>
+				<Field name="Y Rotation" dataType="f32"/>
+				<Field name="Z rotation" dataType="f32"/>
+			</Fields1>
+		</ActionID>
+		<ActionID ID="36" name="Random Position and Rotation?">
+			<Fields1>
+				<Field name="X Position Max?" dataType="f32"/>
+				<Field name="Y Position Max?" dataType="f32"/>
+				<Field name="Z Position Max?" dataType="f32"/>
+				<Field name="X Rotation Max?" dataType="f32"/>
+				<Field name="Y Rotation Max?" dataType="f32"/>
+				<Field name="Z rotation Max?" dataType="f32"/>
+				<Field name="X Position Min?" dataType="f32"/>
+				<Field name="Y Position Min?" dataType="f32"/>
+				<Field name="Z Position Min?" dataType="f32"/>
+				<Field name="X Rotation Min?" dataType="f32"/>
+				<Field name="Y Rotation Min?" dataType="f32"/>
+				<Field name="Z rotation Min?" dataType="f32"/>
+			</Fields1>
+		</ActionID>
+		<ActionID ID="75" name="Play Sound by ID">
+			<Fields1>
+				<Field name="Sound ID" dataType="s32"/>
+				<Field name="Volume" dataType="f32"/>
 				<Field name="Repeat" dataType="s32" isBool=""/>
 			</Fields1>
 		</ActionID>
-		<ActionID ID="131" name="EffectModifier()">
+		<ActionID ID="105" name="Brownian Particle Motion?">
 			<Properties1>
-				<field type="[S]" arg="" name="" wiki="On one effect, this seemed to control the vertical speed of the particles it spawned, but on another it seemed to not do anything, so this is probably linked to some other property or field somewhere in some way" />
-				<field type="[S]" arg="[E]" name="X Scale Multiplier" />
-				<field type="[S]" arg="[E]" name="Y Scale Multiplier" />
-				<field type="[S]" arg="[E]" name="Z Scale Multiplier?" wiki="Probably Z scale multiplier? Just haven't tested it yet." />
-				<field type="[C]" arg="[E]" name="Color Multiplier" />
+				<field type="[S]" arg="" name="Particle Acceleration"/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name="Max Angle of Random Turns"/>
+				<field type="[S]" arg="" name=""/>
 			</Properties1>
-			<Properties2>
-			</Properties2>
+			<Fields1>
+				<Field name="" dataType="s32" isBool="0"/>
+				<Field name="" dataType="s32"/>
+				<Field name="" dataType="s32" isBool=""/>
+			</Fields1>
+		</ActionID>
+		<ActionID ID="128" name="FFX Duration">
+			<Properties1>
+				<field type="[S]" arg="" name="" wiki="How long this effect will spawn particles in seconds. If set to a negative value, it will never stop unless something else makes it stop."/>
+			</Properties1>
+			<Fields1>
+				<Field name="Spawner Delay" dataType="f32"/>
+				<field name="" dataType="s32" isBool=""/>
+				<Field name="" dataType="s32"/>
+				<Field name="" dataType="f32"/>
+			</Fields1>
+		</ActionID>
+		<ActionID ID="129" name="Particle Duration">
+			<Properties1>
+				<field type="[S]" arg="" name="" wiki="How long the particles last in seconds. If set to a negative value, the particles will last forever."/>
+			</Properties1>
+			<Fields1>
+				<Field name="" dataType="f32" wiki="This has a strange effect on effects using action 105's 5th property (normally controls how well particles follow the effect) and action 34's rotation speed properties. When this is set to 1 while those other action properties are also used, it makes the particles fly away from where they spawned very quickly for some reason. Setting it to 0 disables this strange effect. Need to do some more testing with this to figure out what exactly is going on"/>
+			</Fields1>
+		</ActionID>
+		<ActionID ID="131" name="Effect Multiplier (Scale, Color)">
+			<Properties1>
+				<field type="[S]" arg="" name="" wiki="On one effect, this seemed to control the vertical speed of the particles it spawned, but on another it seemed to not do anything, so this is probably linked to some other property or field somewhere in some way"/>
+				<field type="[S]" arg="[E]" name="X Scale"/>
+				<field type="[S]" arg="[E]" name="Y Scale"/>
+				<field type="[S]" arg="[E]" name="Z Scale"/>
+				<field type="[C]" arg="[E]" name="Color"/>
+			</Properties1>
 			<Fields1>
 				<Field name="Keep aspect ratio" dataType="s32" isBool="" wiki="When set to 0, you can scale the particles in each direction individually using the scale multipliers in this action's properties When set to 1, the X scale multiplier will apply to the Y and Z axes as well, so the particles will maintain their aspect ratio. I think the two(?) other scale multipliers do nothing when this is set to 1."/>
 			</Fields1>
-			<Fields2>
-			</Fields2>
 		</ActionID>
-		<ActionID ID="132" name="FFXReference()">
+		<ActionID ID="132" name="FFX Reference">
 			<Fields1>
-				<Field name="FFX ID" dataType="s32" />
+				<Field name="FFX ID" dataType="s32"/>
 			</Fields1>
 		</ActionID>
-		<ActionID ID="199" name="DisableEffect()">
+		<ActionID ID="199" name="Disable Action">
 			<Section10s>
-				<Field name="Disable Effect" dataType="s32" isBool=""/>
+				<Field name="Disable Action" dataType="s32" isBool=""/>
 			</Section10s>
 		</ActionID>
-		<ActionID ID="600" name="TextureStatic()">
+		<ActionID ID="300" name="Spawner Control">
 			<Properties1>
-				<field type="[S]" arg="[P]" name="Scale*" />
-				<field type="[C]" arg="[P]" name="Color*" />
-				<field type="[C]" arg="[PG]" name="Color*" />
-				<field type="[C]" arg="[E]" name="Color*" />
+				<field type="[S]" arg="" name="Particle Spawn Interval" wiki="Delay in seconds between spawning groups of particles."/>
+				<field type="[S]" arg="" name="Particle Spawn Group Size" wiki="This is how many particels spawn at once"/>
+				<field type="[S]" arg="" name="Total Number of Particles to Spawn" wiki="After the total has been met, it will never spawn more particles. If set to a negative value, it will never stop spawning unless something else makes it stop."/>
+			</Properties1>
+			<Fields1>
+				<Field name="Maximum concurrent particles" dataType="s32" wiki="If this limit is reached, no more particles will spawn until some have timed out."/>
+				<field name="" dataType="s32" isBool=""/>
+			</Fields1>
+		</ActionID>
+		<ActionID ID="399" name="Spawner Control (Only Spawn Once)">
+		</ActionID>
+		<ActionID ID="400" name="Spawner (Single Point)">
+			<Fields1>
+				<Field name="" dataType="f32"/>
+			</Fields1>
+		</ActionID>
+		<ActionID ID="401" name="Spawner (Circular, Ring)">
+			<Properties1>
+				<field type="[S]" arg="" name="Radius"/>
+				<field type="[S]" arg="" name="Negative Dead Zone Fraction" wiki="At 0, there is no dead zone and the particles can spawn anywhere in the circle. As the value approaches -1, a dead zone appears in the middle of the circle where no particles can spawn, so they form a ring. At -1, the ring has no width and the particles will only spawn at the outer edge of the circle, exactly (Raduis) away from the center. Positive values will turn the shape into a single point, probably as a backup because the shape is invalid or something."/>
+			</Properties1>
+			<Fields1>
+				<Field name="" dataType="s32" wiki="This is probably some mode or something like that, but I have no idea what it does. When set to values other than 0-6, the shape turns into a single point."/>
+			</Fields1>
+		</ActionID>
+		<ActionID ID="402" name="Spawner (Rectangle)">
+			<Properties1>
+				<field type="[S]" arg="" name="X Size" wiki="Distance between the center of the rectangle and the sides, i.e. half of the length of each side"/>
+				<field type="[S]" arg="" name="Y Size" wiki="Distance between the center of the rectangle and the sides, i.e. half of the length of each side"/>
+				<field type="[S]" arg="" name="Negative Dead Zone Fraction" wiki="At 0, there is no dead zone and the particles can spawn anywhere in the circle. As the value approaches -1, a dead zone appears in the middle of the circle where no particles can spawn, so they form a ring. At -1, the ring has no width and the particles will only spawn at the outer edge of the circle, exactly (radius) away from the center. Positive values will turn the shape into a single point, probably as a backup because the shape is invalid or something."/>
+			</Properties1>
+			<Fields1>
+				<Field name="" dataType="s32" wiki="This is probably some mode or something like that, but I have no idea what it does. When set to values other than 0-6, the shape turns into a single point."/>
+			</Fields1>
+		</ActionID>
+		<ActionID ID="403" name="Spawner (Spherical)">
+			<Properties1>
+				<field type="[S]" arg="" name="Radius"/>
+			</Properties1>
+			<Fields1>
+				<Field name="Spawn Inside" dataType="s32" wiki="When set to 0, particles are only spawned on the surface of the sphere.
+				When set to 1, particles can spawn anywhere inside the sphere."/>
+			</Fields1>
+		</ActionID>
+		<ActionID ID="404" name="Spawner (Cuboidal)">
+			<Properties1>
+				<field type="[S]" arg="" name="X Size" wiki="Distance between the center of the cuboid and the faces, i.e. half of the length of each side"/>
+				<field type="[S]" arg="" name="Y Size" wiki="Distance between the center of the cuboid and the faces, i.e. half of the length of each side"/>
+				<field type="[S]" arg="" name="Z Size" wiki="Distance between the center of the cuboid and the faces, i.e. half of the length of each side"/>
+			</Properties1>
+			<Fields1>
+				<Field name="" dataType="s32" wiki="When this is set to something >6, the shape just turns back into a single point. I couldn't see anything different when testing values 0-6, they all seemed to work the same way. In the FXRs I've looked at, this is always either 0 or 6, but I haven't checked very many. 401 also have a similar field, that could be worth looking into."/>
+				<Field name="" dataType="s32" wiki="When set to 0, particles are only spawned on the surface of the cuboid.
+				When set to 1, particles can spawn anywhere inside the cuboid."	/>
+			</Fields1>
+		</ActionID>
+		<ActionID ID="501" name="Random Rotation?">
+			<Properties1>
+				<field type="[S]" arg="" name="Maximum Random Rotation"/>
+				<field type="[S]" arg="" name="Radius"/>
+			</Properties1>
+		</ActionID>
+		<ActionID ID="600" name="Static Texture">
+			<Properties1>
+				<field type="[S]" arg="[P]" name="Scale*"/>
+				<field type="[C]" arg="[P]" name="Color*"/>
+				<field type="[C]" arg="[PG]" name="Color*"/>
+				<field type="[C]" arg="[E]" name="Color*"/>
 			</Properties1>
 			<Properties2>
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
 			</Properties2>
 			<Fields1>
 				<Field name="Texture ID" dataType="s32"/>
-				<Field name="Particle Blend Mode" dataType="s32" enum="blendModes"/>
+				<Field name="Particle Blend Mode" dataType="s32" enum="BlendModes"/>
 				<Field name="" dataType="s32"/>
 				<Field name="" dataType="s32"/>
 				<Field name="" dataType=""/>
@@ -108,7 +240,7 @@
 				<Field name="" dataType=""/>
 				<Field name="" dataType=""/>
 				<Field name="" dataType="s32"/>
-				<Field name="" dataType="" />
+				<Field name="" dataType=""/>
 				<field name="" dataType="s32" isBool=""/>
 				<field name="Color* R?" dataType="f32"/>
 				<field name="Color* G?" dataType="f32"/>
@@ -137,34 +269,34 @@
 				<field name="" dataType="f32"/>
 			</Fields2>
 		</ActionID>
-		<ActionID ID="601" name="Line(Color)">
+		<ActionID ID="601" name="Line">
 			<Properties1>
-				<field type="[S]" arg="[PG]" name="Lenght*" />
-				<field type="[C]" arg="[P]" name="Color*" />
-				<field type="[C]" arg="[P]" name="Color*" />
-				<field type="[C]" arg="[E]" name="Start Color" wiki="End of the line color. One color fades to the other along the line." />
-				<field type="[C]" arg="[E]" name="End Color" wiki="Start of the line color. One color fades to the other along the line." />
-				<field type="[S]" arg="[P]" name="Lenght*" />
-				<field type="[C]" arg="[E]" name="Color*" />
+				<field type="[S]" arg="[PG]" name="Lenght*"/>
+				<field type="[C]" arg="[P]" name="Color*"/>
+				<field type="[C]" arg="[P]" name="Color*"/>
+				<field type="[C]" arg="[E]" name="Start Color" wiki="End of the line color. One color fades to the other along the line."/>
+				<field type="[C]" arg="[E]" name="End Color" wiki="Start of the line color. One color fades to the other along the line."/>
+				<field type="[S]" arg="[P]" name="Lenght*"/>
+				<field type="[C]" arg="[E]" name="Color*"/>
 			</Properties1>
 			<Properties2>
-				<field type="[S]" arg="" name="Brightness*" />
-				<field type="[S]" arg="" name="Brightness*" />
-				<field type="[S]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
+				<field type="[S]" arg="" name="Brightness*"/>
+				<field type="[S]" arg="" name="Brightness*"/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
 			</Properties2>
 			<Fields1>
-				<Field name="Particle Blend Mode" dataType="s32" enum="blendModes"/>
+				<Field name="Particle Blend Mode" dataType="s32" enum="BlendModes"/>
 				<Field name="" dataType="s32"/>
 			</Fields1>
 			<Fields2>
 				<Field name="" dataType=""/>
 				<Field name="" dataType=""/>
 				<Field name="" dataType="s32"/>
-				<Field name="" dataType="" />
+				<Field name="" dataType=""/>
 				<field name="" dataType="s32"/>
 				<field name="Color* R?" dataType="f32"/>
 				<field name="Color* G?" dataType="f32"/>
@@ -193,36 +325,36 @@
 				<field name="" dataType="f32"/>
 			</Fields2>
 		</ActionID>
-		<ActionID ID="602" name="Rectangle(Color)">
+		<ActionID ID="602" name="Basic Rectangle">
 			<Properties1>
-				<field type="[S]" arg="[PG]" name="X Scale*" />
-				<field type="[S]" arg="[PG]" name="Y Scale*" />
-				<field type="[C]" arg="[P]" name="Color*" />
-				<field type="[C]" arg="[P]" name="Color*" />
-				<field type="[C]" arg="[E]" name="Top Color" wiki="This controls the upper square's color. One color fades to the other across the rectangle." />
-				<field type="[C]" arg="[E]" name="Bottom Color" wiki="This controls the lower square's color. One color fades to the other along the line." />
-				<field type="[S]" arg="[P]" name="X Scale*" />
-				<field type="[S]" arg="[P]" name="Y Scale*" />
-				<field type="[C]" arg="[E]" name="Color*" />
+				<field type="[S]" arg="[PG]" name="X Scale*"/>
+				<field type="[S]" arg="[PG]" name="Y Scale*"/>
+				<field type="[C]" arg="[P]" name="Color*"/>
+				<field type="[C]" arg="[P]" name="Color*"/>
+				<field type="[C]" arg="[E]" name="Top Color" wiki="This controls the upper square's color. One color fades to the other across the rectangle."/>
+				<field type="[C]" arg="[E]" name="Bottom Color" wiki="This controls the lower square's color. One color fades to the other along the line."/>
+				<field type="[S]" arg="[P]" name="X Scale*"/>
+				<field type="[S]" arg="[P]" name="Y Scale*"/>
+				<field type="[C]" arg="[E]" name="Color*"/>
 			</Properties1>
 			<Properties2>
-				<field type="[S]" arg="" name="Brightness*" />
-				<field type="[S]" arg="" name="Brightness*" />
-				<field type="[S]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
+				<field type="[S]" arg="" name="Brightness*"/>
+				<field type="[S]" arg="" name="Brightness*"/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
 			</Properties2>
 			<Fields1>
-				<Field name="Particle Blend Mode" dataType="s32" enum="blendModes"/>
+				<Field name="Particle Blend Mode" dataType="s32" enum="BlendModes"/>
 				<Field name="" dataType="s32"/>
 			</Fields1>
 			<Fields2>
 				<Field name="" dataType=""/>
 				<Field name="" dataType=""/>
 				<Field name="" dataType="s32"/>
-				<Field name="" dataType="" />
+				<Field name="" dataType=""/>
 				<field name="" dataType="s32"/>
 				<field name="Color* R?" dataType="f32"/>
 				<field name="Color* G?" dataType="f32"/>
@@ -251,46 +383,46 @@
 				<field name="" dataType="f32"/>
 			</Fields2>
 		</ActionID>
-		<ActionID ID="603" name="TextureAnimated()">
+		<ActionID ID="603" name="Animated Texture">
 			<Properties1>
 				<field type="[S]" arg="[P]" name="X Offset" wiki="X Offset from the anchor point, can be very useful for making particles move around. The other properties of the particle affects it, like the scale multiplier, particle rotation, and orientation mode."/>
 				<field type="[S]" arg="[P]" name="Y Offset" wiki="Y Offset from the anchor point, can be very useful for making particles move around. The other properties of the particle affects it, like the scale multiplier, particle rotation, and orientation mode."/>
 				<field type="[S]" arg="[P]" name="Z Offset" wiki="Z Offset from the anchor point, can be very useful for making particles move around. The other properties of the particle affects it, like the scale multiplier, particle rotation, and orientation mode."/>
-				<field type="[S]" arg="[P]" name="Scale*" />
-				<field type="[S]" arg="" name="" />
-				<field type="[C]" arg="[P]" name="Color*" />
+				<field type="[S]" arg="[P]" name="Scale*"/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[C]" arg="[P]" name="Color*"/>
 				<field type="[C]" arg="[PG]" name="Color*" wiki="The color is chosen when the particle spawns and it will stay that color until it expires."/>
-				<field type="[C]" arg="[E]" name="Color*" />
+				<field type="[C]" arg="[E]" name="Color*"/>
 				<field type="[S]" arg="[P]" name="Opacity Threshold" wiki="The range is 0-255. Parts of the particle that have less opacity than this value will be invisible."/>
-				<field type="[S]" arg="[P]" name="X Rotation" />
-				<field type="[S]" arg="[P]" name="Y Rotation" />
-				<field type="[S]" arg="[P]" name="Z Rotation" />
-				<field type="[S]" arg="[P]" name="X Rotation Speed°" />
-				<field type="[S]" arg="[P]" name="X Rotation Speed° Multiplier" />
-				<field type="[S]" arg="[P]" name="Y Rotation Speed°" />
-				<field type="[S]" arg="[P]" name="Y Rotation Speed° Multiplier" />
-				<field type="[S]" arg="[P]" name="Z Rotation Speed°" />
-				<field type="[S]" arg="[P]" name="Z Rotation Speed° Multiplier" />
-				<field type="[S]" arg="" name="Negative Z Position?" wiki="Seems to work exactly like the Z position, but the axis is flipped around" />
-				<field type="[S]" arg="" name="Texture Animation Offset" />
-				<field type="[S]" arg="[P]" name="Texture Animation Frame Index" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
+				<field type="[S]" arg="[P]" name="X Rotation"/>
+				<field type="[S]" arg="[P]" name="Y Rotation"/>
+				<field type="[S]" arg="[P]" name="Z Rotation"/>
+				<field type="[S]" arg="[P]" name="X Rotation Speed°"/>
+				<field type="[S]" arg="[P]" name="X Rotation Speed° Multiplier"/>
+				<field type="[S]" arg="[P]" name="Y Rotation Speed°"/>
+				<field type="[S]" arg="[P]" name="Y Rotation Speed° Multiplier"/>
+				<field type="[S]" arg="[P]" name="Z Rotation Speed°"/>
+				<field type="[S]" arg="[P]" name="Z Rotation Speed° Multiplier"/>
+				<field type="[S]" arg="" name="Negative Z Position?" wiki="Seems to work exactly like the Z position, but the axis is flipped around"/>
+				<field type="[S]" arg="" name="Texture Animation Offset"/>
+				<field type="[S]" arg="[P]" name="Texture Animation Frame Index"/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
 			</Properties1>
 			<Properties2>
-				<field type="[S]" arg="" name="Brightness*" />
-				<field type="[S]" arg="" name="Brightness*" />
-				<field type="[S]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
+				<field type="[S]" arg="" name="Brightness*"/>
+				<field type="[S]" arg="" name="Brightness*"/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
 			</Properties2>
 			<Fields1>
 				<Field name="Orientation Mode" dataType="s32" enum="orientationModesGeneral"/>
 				<Field name="Texture ID" dataType="s32"/>
 				<Field name="Texture ID 2?" dataType="s32"/>
-				<Field name="Particle Blend Mode" dataType="s32" enum="blendModes"/>
+				<Field name="Particle Blend Mode" dataType="s32" enum="BlendModes"/>
 				<Field name="Particle Size" dataType="f32"/>
 				<Field name="Particle Size?" dataType="f32"/>
 				<Field name="" dataType="s32" isBool=""/>
@@ -298,9 +430,9 @@
 				<Field name="Horizontal Texture Frames" dataType="s32" wiki="How many frames are stacked horizontally in the texture sheet."/>
 				<Field name="Texture Frames" dataType="s32" wiki="How many frames are in the texture sheet in total."/>
 				<Field name="" dataType="s32" isBool=""/>
-				<Field name="" dataType="s32" />
-				<Field name="" dataType="s32" />
-				<Field name="" dataType="f32" />
+				<Field name="" dataType="s32"/>
+				<Field name="" dataType="s32"/>
+				<Field name="" dataType="f32"/>
 				<Field name="" dataType="s32" isBool=""/>
 				<Field name="" dataType="s32" isBool=""/>
 				<Field name="" dataType="s32" isBool=""/>
@@ -309,7 +441,7 @@
 				<Field name="" dataType="s32" isBool=""/>
 				<Field name="" dataType="s32" isBool=""/>
 				<Field name="" dataType="s32"/>
-				<Field name="" dataType="s32" />
+				<Field name="" dataType="s32"/>
 				<field name="" dataType=""/>
 				<field name="Color* R?" dataType="f32"/>
 				<field name="Color* G?" dataType="f32"/>
@@ -338,80 +470,80 @@
 				<field name="" dataType="f32"/>
 			</Fields2>
 		</ActionID>
-		<ActionID ID="604" name="TexturesBlend(Texture, Texture, Texture, Animation)">
+		<ActionID ID="604" name="Textures Blend (Texture, Texture, Animated Texture)">
 			<Properties1>
 				<field type="[S]" arg="[P]" name="X Offset" wiki="X Offset from the anchor point, can be very useful for making particles move around. The other properties of the particle affects it, like the scale multiplier, particle rotation, and orientation mode."/>
 				<field type="[S]" arg="[P]" name="Y Offset" wiki="Y Offset from the anchor point, can be very useful for making particles move around. The other properties of the particle affects it, like the scale multiplier, particle rotation, and orientation mode."/>
 				<field type="[S]" arg="[P]" name="Z Offset" wiki="Z Offset from the anchor point, can be very useful for making particles move around. The other properties of the particle affects it, like the scale multiplier, particle rotation, and orientation mode."/>
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="X Rotation°?" />
-				<field type="[S]" arg="" name="Y Rotation°?" />
-				<field type="[S]" arg="[P]" name="Z Rotation°" />
-				<field type="[S]" arg="" name="X Rotation Speed°?" />
-				<field type="[S]" arg="" name="X Rotation Speed° Multiplier?" />
-				<field type="[S]" arg="" name="Y Rotation Speed°?" />
-				<field type="[S]" arg="" name="Y Rotation Speed° Multiplier?" />
-				<field type="[S]" arg="" name="Z Rotation Speed°?" />
-				<field type="[S]" arg="" name="Z Rotation Speed° Multiplier?" />
-				<field type="[C]" arg="[P]" name="Color*" />
-				<field type="[C]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[C]" arg="" name="Color*" />
-				<field type="[C]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="Texture Animation Offset 1st" />
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name="X Rotation°?"/>
+				<field type="[S]" arg="" name="Y Rotation°?"/>
+				<field type="[S]" arg="[P]" name="Z Rotation°"/>
+				<field type="[S]" arg="" name="X Rotation Speed°?"/>
+				<field type="[S]" arg="" name="X Rotation Speed° Multiplier?"/>
+				<field type="[S]" arg="" name="Y Rotation Speed°?"/>
+				<field type="[S]" arg="" name="Y Rotation Speed° Multiplier?"/>
+				<field type="[S]" arg="" name="Z Rotation Speed°?"/>
+				<field type="[S]" arg="" name="Z Rotation Speed° Multiplier?"/>
+				<field type="[C]" arg="[P]" name="Color*"/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[C]" arg="" name="Color*"/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name="Texture Animation Offset 1st"/>
 				<field type="[S]" arg="[P]" name="Texture Animation Frame Index 1st" wiki="The index of the frame to show of the texture animation. The offset above is added onto this. If it exceeds the number of frames in the animation, it loops around to the beginning again. Can be animated using an A64 B16 property or similar"/>
-				<field type="[S]" arg="" name="Texture Animation Offset 2nd?" />
-				<field type="[S]" arg="" name="Texture Animation Frame Index 2nd?" />
-				<field type="[S]" arg="" name="Texture Animation Offset 3rd?" />
-				<field type="[S]" arg="" name="Texture Animation Frame Index 3rd?" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
+				<field type="[S]" arg="" name="Texture Animation Offset 2nd?"/>
+				<field type="[S]" arg="" name="Texture Animation Frame Index 2nd?"/>
+				<field type="[S]" arg="" name="Texture Animation Offset 3rd?"/>
+				<field type="[S]" arg="" name="Texture Animation Frame Index 3rd?"/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
 				<field type="[S]" arg="[P]" name="Texture X scroll speed 2nd" wiki="Positive = right"/>
 				<field type="[S]" arg="[P]" name="Texture Y scroll speed 2nd" wiki="Positive = up"/>
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
 				<field type="[S]" arg="[P]" name="Texture X scroll speed 3rd" wiki="Positive = right"/>
 				<field type="[S]" arg="[P]" name="Texture Y scroll speed 3rd" wiki="Positive = up"/>
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
 			</Properties1>
 			<Properties2>
-				<field type="[S]" arg="" name="Brightness*" />
-				<field type="[S]" arg="" name="Brightness*" />
-				<field type="[S]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
+				<field type="[S]" arg="" name="Brightness*"/>
+				<field type="[S]" arg="" name="Brightness*"/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
 			</Properties2>
 			<Fields1>
 				<Field name="Orientation Mode" dataType="s32" enum="orientationModesGeneral"/>
 				<Field name="Texture ID" dataType="s32"/>
 				<Field name="Texture ID 2" dataType="s32"/>
 				<Field name="Texture ID 3" dataType="s32"/>
-				<Field name="Particle Blend Mode" dataType="s32" enum="blendModes"/>
+				<Field name="Particle Blend Mode" dataType="s32" enum="BlendModes"/>
 				<Field name="" dataType="s32" isBool=""/>
-				<Field name="" dataType="s32" />
+				<Field name="" dataType="s32"/>
 				<Field name="Horizontal Texture Frames" dataType="s32" wiki="How many frames are stacked horizontally in the texture sheet."/>
 				<Field name="Texture Frames" dataType="s32" wiki="How many frames are in the texture sheet in total."/>
 				<Field name="" dataType="s32" isBool=""/>
-				<Field name="" dataType="s32" />
-				<Field name="" dataType="s32" />
+				<Field name="" dataType="s32"/>
+				<Field name="" dataType="s32"/>
 				<Field name="" dataType="s32" isBool=""/>
 				<Field name="" dataType="s32" isBool=""/>
-				<Field name="" dataType="" />
+				<Field name="" dataType=""/>
 			</Fields1>
 			<Fields2>
-				<Field name="" dataType="" />
-				<Field name="" dataType="" />
+				<Field name="" dataType=""/>
+				<Field name="" dataType=""/>
 				<Field name="" dataType="s32"/>
-				<Field name="" dataType="" />
+				<Field name="" dataType=""/>
 				<field name="" dataType="s32" isBool=""/>
 				<field name="Color* R?" dataType="f32"/>
 				<field name="Color* G?" dataType="f32"/>
@@ -440,42 +572,42 @@
 				<field name="" dataType="f32"/>
 			</Fields2>
 		</ActionID>
-		<ActionID ID="605" name="Mesh(Texture)">
+		<ActionID ID="605" name="Mesh(605)">
 			<Properties1>
-				<field type="[S]" arg="[P]" name="X Scale*" />
-				<field type="[S]" arg="[P]" name="Y Scale*" />
-				<field type="[S]" arg="[P]" name="Z Scale*" />
-				<field type="[S]" arg="[P]" name="X Rotation°" />
-				<field type="[S]" arg="[P]" name="Y Rotation°" />
-				<field type="[S]" arg="[P]" name="Z Rotation°" />
-				<field type="[S]" arg="[P]" name="X Rotation Speed°" />
-				<field type="[S]" arg="[P]" name="X Rotation Speed° Multiplier" />
-				<field type="[S]" arg="[P]" name="Y Rotation Speed°" />
-				<field type="[S]" arg="[P]" name="Y Rotation Speed° Multiplier" />
-				<field type="[S]" arg="[P]" name="Z Rotation Speed°" />
-				<field type="[S]" arg="[P]" name="Z Rotation Speed° Multiplier" />
-				<field type="[C]" arg="[P]" name="Color*" />
+				<field type="[S]" arg="[P]" name="X Scale*"/>
+				<field type="[S]" arg="[P]" name="Y Scale*"/>
+				<field type="[S]" arg="[P]" name="Z Scale*"/>
+				<field type="[S]" arg="[P]" name="X Rotation°"/>
+				<field type="[S]" arg="[P]" name="Y Rotation°"/>
+				<field type="[S]" arg="[P]" name="Z Rotation°"/>
+				<field type="[S]" arg="[P]" name="X Rotation Speed°"/>
+				<field type="[S]" arg="[P]" name="X Rotation Speed° Multiplier"/>
+				<field type="[S]" arg="[P]" name="Y Rotation Speed°"/>
+				<field type="[S]" arg="[P]" name="Y Rotation Speed° Multiplier"/>
+				<field type="[S]" arg="[P]" name="Z Rotation Speed°"/>
+				<field type="[S]" arg="[P]" name="Z Rotation Speed° Multiplier"/>
+				<field type="[C]" arg="[P]" name="Color*"/>
 				<field type="[C]" arg="[PG]" name="Color*" wiki="The color is chosen when the particle spawns and it will stay that color until it expires."/>
-				<field type="[C]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="[P]" name="Texture Animation Frame Index" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
+				<field type="[C]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="[P]" name="Texture Animation Frame Index"/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
 			</Properties1>
 			<Properties2>
-				<field type="[S]" arg="" name="Brightness*" />
-				<field type="[S]" arg="" name="Brightness*" />
-				<field type="[S]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
+				<field type="[S]" arg="" name="Brightness*"/>
+				<field type="[S]" arg="" name="Brightness*"/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
 			</Properties2>
 			<Fields1>
 				<Field name="Orientation Mode" dataType="s32" enum="orientationSpecializedModes605"/>
@@ -484,25 +616,25 @@
 				<Field name="" dataType="f32"/>
 				<Field name="" dataType="f32"/>
 				<Field name="" dataType="s32" isBool=""/>
-				<Field name="Particle Blend Mode" dataType="s32" enum="blendModes"/>
+				<Field name="Particle Blend Mode" dataType="s32" enum="BlendModes"/>
 				<Field name="Horizontal Texture Frames" dataType="s32" wiki="How many frames are stacked horizontally in the texture sheet."/>
 				<Field name="Texture Frames" dataType="s32" wiki="How many frames are in the texture sheet in total."/>
-				<Field name="" dataType="s32" />
-				<Field name="" dataType="s32" />
+				<Field name="" dataType="s32"/>
+				<Field name="" dataType="s32"/>
 				<Field name="" dataType="s32" isBool=""/>
 				<Field name="" dataType="f32" isBool=""/>
 				<Field name="" dataType="s32" isBool=""/>
-				<Field name="" dataType="s32" />
-				<Field name="" dataType="" />
+				<Field name="" dataType="s32"/>
+				<Field name="" dataType=""/>
 				<Field name="" dataType="s32" isBool=""/>
-				<Field name="" dataType="f32" />
-				<Field name="" dataType="" />
+				<Field name="" dataType="f32"/>
+				<Field name="" dataType=""/>
 			</Fields1>
 			<Fields2>
 				<Field name="" dataType="s32" isBool=""/>
-				<Field name="" dataType="" />
+				<Field name="" dataType=""/>
 				<Field name="" dataType="s32"/>
-				<Field name="" dataType="" />
+				<Field name="" dataType=""/>
 				<field name="" dataType=""/>
 				<field name="Color* R?" dataType="f32"/>
 				<field name="Color* G?" dataType="f32"/>
@@ -530,37 +662,37 @@
 				<field name="" dataType="f32"/>
 			</Fields2>
 		</ActionID>
-		<ActionID ID="606" name="Trail[Texture, Animation]">
+		<ActionID ID="606" name="Trails">
 			<Properties1>
-				<field type="[S]" arg="" name="Scale*" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[C]" arg="[T]" name="Color*" />
-				<field type="[C]" arg="[TG]" name="Color*" />
-				<field type="[C]" arg="[E]" name="Color*" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="[T]" name="Texture Animation Frame Index" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
+				<field type="[S]" arg="" name="Scale*"/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[C]" arg="[T]" name="Color*"/>
+				<field type="[C]" arg="[TG]" name="Color*"/>
+				<field type="[C]" arg="[E]" name="Color*"/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="[T]" name="Texture Animation Frame Index"/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
 			</Properties1>
 			<Properties2>
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
 			</Properties2>
 			<Fields1>
 				<Field name="Orientation Mode" dataType="s32" enum="orientationSpecializedModes606"/>
 				<Field name="Texture ID" dataType="s32"/>
 				<Field name="Texture ID 2?" dataType="s32"/>
-				<Field name="Particle Blend Mode" dataType="s32" enum="blendModes"/>
+				<Field name="Particle Blend Mode" dataType="s32" enum="BlendModes"/>
 				<Field name="" dataType="f32"/>
 				<Field name="" dataType="f32"/>
 				<Field name="" dataType="s32"/>
@@ -576,9 +708,9 @@
 			</Fields1>
 			<Fields2>
 				<Field name="" dataType=""/>
-				<Field name="" dataType="" />
+				<Field name="" dataType=""/>
 				<Field name="" dataType="s32"/>
-				<Field name="" dataType="" />
+				<Field name="" dataType=""/>
 				<Field name="" dataType="s32"/>
 				<field name="" dataType="f32"/>
 				<field name="" dataType="f32"/>
@@ -607,33 +739,33 @@
 				<field name="" dataType="f32"/>
 			</Fields2>
 		</ActionID>
-		<ActionID ID="607" name="RectangleDistorted[Texture]">
+		<ActionID ID="607" name="Distortion (Rectangle)">
 			<Properties1>
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[C]" arg="[P]" name="Color*" />
-				<field type="[C]" arg="" name="Color*" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[C]" arg="[P]" name="Color*"/>
+				<field type="[C]" arg="" name="Color*"/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
 			</Properties1>
 			<Properties2>
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[C]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
 			</Properties2>
 			<Fields1>
 				<Field name="Background Blend Type?" dataType="s32" wiki="Affects how the particles are blended with the background in some way?"/>
@@ -642,7 +774,7 @@
 				<Field name="" dataType=""/>
 				<Field name="Texture ID 1" dataType="s32"/>
 				<Field name="Texture ID 2" dataType="s32"/>
-				<Field name="Blend Mode" dataType="s32" enum="blendModes"/>
+				<Field name="Blend Mode" dataType="s32" enum="BlendModes"/>
 				<Field name="" dataType="f32"/>
 				<Field name="" dataType="f32"/>
 				<Field name="" dataType="f32"/>
@@ -652,9 +784,9 @@
 			</Fields1>
 			<Fields2>
 				<Field name="" dataType=""/>
-				<Field name="" dataType="" />
+				<Field name="" dataType=""/>
 				<Field name="" dataType="s32"/>
-				<Field name="" dataType="f32" />
+				<Field name="" dataType="f32"/>
 				<Field name="" dataType=""/>
 				<field name="" dataType="f32"/>
 				<field name="" dataType="f32"/>
@@ -683,22 +815,22 @@
 				<field name="" dataType=""/>
 			</Fields2>
 		</ActionID>
-		<ActionID ID="609" name="LightSource(Color)">
+		<ActionID ID="609" name="Light Source">
 			<Properties1>
-				<field type="[C]" arg="" name="Light Color" />
-				<field type="[C]" arg="" name="Specular Color" />
-				<field type="[S]" arg="" name="Light Radius" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
+				<field type="[C]" arg="" name="Light Color"/>
+				<field type="[C]" arg="" name="Specular Color"/>
+				<field type="[S]" arg="" name="Radius"/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
 			</Properties1>
 			<Properties2>
-				<field type="[S]" arg="" name="" />
-				<field type="[S]" arg="" name="" />
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
 			</Properties2>
 			<Fields1>
 				<Field name="" dataType="s32"/>
@@ -730,6 +862,84 @@
 				<Field name="" dataType="s32"/>
 				<Field name="" dataType=""/>
 				<Field name="" dataType="f32"/>
+			</Fields2>
+		</ActionID>
+		<ActionID ID="10012" name="Trails (Weapon Traces)">
+			<Properties1>
+				<field type="[S]" arg="" name="Trail Size"/>
+				<field type="[S]" arg="" name="Scale Multiplier"/>
+				<field type="[S]" arg="" name="Opacity?"/>
+				<field type="[S]" arg="" name="Opacity?"/>
+				<field type="[C]" arg="[T]" name="Color*"/>
+				<field type="[C]" arg="[TG]" name="Color*"/>
+				<field type="[C]" arg="[E]" name="Color*"/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[S]" arg="" name="Segment Texture Width" wiki="How much of the width of the texture should be used per segment. 0: a single column of pixels is used for the entire trail. 0-1: a portion of the width is used for each segment. For example, setting this to 0.5 would make 2 segments show the full texture, and if there were more than 2 segments, the texture would be repeated. 1: the full width of the texture is used for each segment. >1: the texture is repeated on every segment."/>
+				<field type="[S]" arg="" name="Horizontal Texture Scroll Speed"/>
+				<field type="[S]" arg="" name="Vertical Texture Offset Variance"/>
+				<field type="[S]" arg="" name=""/>
+			</Properties1>
+			<Properties2>
+				<field type="[S]" arg="" name="Brightness Multiplier"/>
+				<field type="[S]" arg="" name="Brightness Multiplier"/>
+				<field type="[S]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[C]" arg="" name=""/>
+				<field type="[S]" arg="" name=""/>
+			</Properties2>
+			<Fields1>
+				<Field name="Orientation Mode" dataType="s32" enum="orientationSpecializedModes606"/>
+				<Field name="Texture ID" dataType="s32"/>
+				<Field name="" dataType=""/>
+				<Field name="Particle Blend Mode" dataType="s32" enum="BlendModes"/>
+				<Field name="Trail Segment Spawn Interval" dataType="f32"/>
+				<Field name="Trail Segment Duration" dataType="f32"/>
+				<Field name="Maximum Number of Trail Segments" dataType="s32"/>
+				<Field name="" dataType="s32"/>
+				<Field name="" dataType=""/>
+				<Field name="" dataType="f32"/>
+				<Field name="" dataType="s32" isBool=""/>
+				<Field name="" dataType="s32"/>
+				<Field name="" dataType="s32" isBool=""/>
+				<Field name="" dataType="s32"/>
+				<Field name="" dataType="s32"/>
+				<Field name="" dataType=""/>
+			</Fields1>
+			<Fields2>
+				<Field name="" dataType="s32"/>
+				<Field name="" dataType=""/>
+				<Field name="" dataType="s32"/>
+				<Field name="" dataType="s32"/>
+				<Field name="" dataType="s32" isBool=""/>
+				<field name="" dataType="f32"/>
+				<field name="" dataType="f32"/>
+				<field name="" dataType="f32"/>
+				<field name="" dataType="f32"/>
+				<field name="" dataType="f32"/>
+				<field name="" dataType=""/>
+				<field name="" dataType=""/>
+				<field name="" dataType=""/>
+				<field name="" dataType=""/>
+				<field name="" dataType="f32"/>
+				<field name="" dataType="f32"/>
+				<field name="" dataType="f32"/>
+				<field name="" dataType="f32"/>
+				<field name="" dataType="f32"/>
+				<field name="Minimum View Distance" dataType="f32"/>
+				<field name="Maximum View Distance" dataType="f32"/>
+				<field name="" dataType="s32"/>
+				<Field name="" dataType=""/>
+				<field name="" dataType=""/>
+				<field name="" dataType=""/>
+				<field name="" dataType=""/>
+				<Field name="" dataType="f32"/>
+				<field name="" dataType=""/>
+				<field name="" dataType="s32"/>
+				<field name="" dataType=""/>
+				<field name="" dataType="f32"/>
 			</Fields2>
 		</ActionID>
 	</ActionIDs>
